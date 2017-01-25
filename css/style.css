@@ -22,3 +22,20 @@ h2 {
 	/*position: absolute;*/
 	/*align-content: center;*/
 }
+
+
+#favAnimal {
+	font-style:italic;
+	color: #3D3BD5;
+}
+
+#favAnimalIcon {
+	max-width: 25px;
+	max-height: 25px;
+	align-content: center;
+	position: absolute;
+	padding-left: 5px;
+}
+
+body {background-color:lightblue}
+fav {color:red}
