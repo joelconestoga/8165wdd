@@ -5,4 +5,20 @@ p{
 	font-weight: bold;
 }
 
+li {
+	color: blue;
+}
 
+h2 {
+	color: brown;
+}
+
+#favCoffee {
+	font-style: italic;
+}
+
+#favCoffeeIcon {
+	height: 80px;
+	/*position: absolute;*/
+	/*align-content: center;*/
+}
