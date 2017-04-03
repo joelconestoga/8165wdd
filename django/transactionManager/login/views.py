@@ -8,6 +8,25 @@ from .forms import UserForm
 def index(request) :
 	return render(request, 'login/index.html')
 
+def log_in(request):
+	
+	if request.method != "POST":
+		return render(request, 'login/log_in.html')
+		
+	username = request.POST['username']
+	password = request.POST['password']
+
+	user = authenticate(username=username, password=password)
+
+	if user is None:
+		return render(request, 'login/log_in.html', {'error_message': 'Invalid login'})
+
+	login(request, user)
+	#transactions = Transactions.objects.filter(user=request.user)
+	return render(request, 'login/index.html')
+
+
+
 def register(request):
 	form = UserForm(request.POST or None)
 
