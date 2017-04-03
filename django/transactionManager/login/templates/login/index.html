@@ -1,5 +1,31 @@
 {% extends 'login/base.html' %}
 
 {% block body %}
-<h2>Listing {{ user }} Transactions</h2>
+<div class="albums-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ user.username }}'s Transactions</h2>
+        </div>
+        {% if transactions %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+		            {% for trans in transactions %}
+		            	<tr>
+		            		<td>{{ trans.name }}</td>
+		            		<td>$ {{ trans.value }}</td>
+		            	</tr>
+		            {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

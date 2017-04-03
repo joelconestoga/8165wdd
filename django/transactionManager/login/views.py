@@ -4,9 +4,11 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import UserForm
+from .models import Transaction
 
 def index(request) :
-	return render(request, 'login/index.html')
+	transactions = Transaction.objects.filter(user=request.user)
+	return render(request, 'login/index.html', {'transactions': transactions})
 
 def log_in(request):
 	
@@ -22,9 +24,8 @@ def log_in(request):
 		return render(request, 'login/log_in.html', {'error_message': 'Invalid login'})
 
 	login(request, user)
-	#transactions = Transactions.objects.filter(user=request.user)
-	return render(request, 'login/index.html')
-
+	
+	return index(request)
 
 
 def register(request):
@@ -46,12 +47,7 @@ def register(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-
-				context = {
-					'user': username,
-				}
-
-				return render(request, 'login/index.html', context)
+				return index(request)
 
 	return render(request, 'login/register.html', {'form': form})
 
