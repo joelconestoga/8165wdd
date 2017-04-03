@@ -3,47 +3,38 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.views import generic
-from django.views.generic import View
 from .forms import UserForm
 
 def index(request) :
-	return HttpResponse("<h2>Heyyy!!</h2>")
+	return render(request, 'login/index.html')
 
-class UserFormView(View):
+def register(request):
+	form = UserForm(request.POST or None)
 
-	form_class = UserForm
-	template_name = 'login/register.html'
+	if form.is_valid():
 
-	# display a blank form
-	def get(self, request):
-		form = self.form_class(None)
-		return render(request, self.template_name, {'form': form})
+		user = form.save(commit=False)
 
-	# process form data
-	def post(self, request):
-		form = self.form_class(request.POST)
+		#cleaned (normalized) data
+		username = form.cleaned_data['username']
+		password = form.cleaned_data['password']
+		user.set_password(password)
+		user.save()
 
-		if form.is_valid():
+		# returns User objects if credentials are correct
+		user = authenticate(username=username, password=password)
 
-			user = form.save(commit=False)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
 
-			#cleaned (normalized) data
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
-			user.set_password(password)
-			user.save()
+				context = {
+					'user': username,
+				}
 
-			# returns User objects if credentials are correct
-			user = authenticate(username=username, password=password)
+				return render(request, 'login/index.html', context)
 
-			if user is not None:
-
-				if user.is_active:
-					login(request, user)
-					return redirect('login:index')
-
-		return render(request, self.template_form, {'form': form})
+	return render(request, 'login/register.html', {'form': form})
 
 
 
