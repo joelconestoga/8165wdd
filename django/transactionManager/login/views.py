@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import UserForm
+from .forms import UserForm, TransactionForm
 from .models import Transaction
 
 def index(request) :
@@ -50,6 +50,27 @@ def register(request):
 				return index(request)
 
 	return render(request, 'login/register.html', {'form': form})
+
+
+def add_transaction(request):
+	
+	if not request.user.is_authenticated():
+		return render(request, 'login/log_in.html')
+
+	form = TransactionForm(request.POST or None)
+
+	if form.is_valid():
+		trans = form.save(commit=False)
+		trans.user = request.user
+		trans.save()
+		return index(request)
+
+	return render(request, 'login/add_transaction.html', {'form': form})
+
+
+
+
+
 
 
 
