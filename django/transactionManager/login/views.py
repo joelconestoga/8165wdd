@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm, TransactionForm, CategoryForm
 from .models import Transaction, Category
 
@@ -26,6 +26,12 @@ def log_in(request):
 	login(request, user)
 	
 	return index(request)
+
+
+def log_out(request):
+    logout(request)
+    form = UserForm(request.POST or None)
+    return render(request, 'login/log_in.html')
 
 
 def register(request):
