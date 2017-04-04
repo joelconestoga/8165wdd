@@ -13,6 +13,7 @@
                     <tr>
                         <th>Description</th>
                         <th>Value</th>
+                        <th>Category</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,6 +21,7 @@
 		            	<tr>
 		            		<td>{{ trans.name }}</td>
 		            		<td>$ {{ trans.value }}</td>
+                            <td>{{ trans.category }}</td>
 		            	</tr>
 		            {% endfor %}
                 </tbody>
