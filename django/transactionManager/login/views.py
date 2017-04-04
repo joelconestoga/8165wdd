@@ -7,6 +7,9 @@ from .forms import UserForm, TransactionForm, CategoryForm
 from .models import Transaction, Category
 
 def index(request) :
+	if not request.user.is_authenticated():
+		return render(request, 'login/log_in.html')
+
 	transactions = Transaction.objects.filter(user=request.user)
 	return render(request, 'login/index.html', {'transactions': transactions})
 

@@ -3,11 +3,18 @@
 {% block body %}
 <div class="albums-container container-fluid">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-9">
             <h2>{{ user.username }}'s Transactions</h2>
         </div>
+        <div class="col-sm-3">
+            <a href="{% url 'login:add_transaction' %}">
+                <button type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Transaction
+                </button>
+            </a>
+        </div>
         {% if transactions %}
-
+        <div class="col-sm-12">
             <table class="table">
                 <thead>
                     <tr>
@@ -26,7 +33,7 @@
 		            {% endfor %}
                 </tbody>
             </table>
-
+        </div>
         {% endif %}
     </div>
 </div>
