@@ -4,6 +4,7 @@ window.onload = function() {
 
 function getAllUsers() {
 	createRequest("GET", "/backend/users/", usersHandler);
+	createRequest("GET", "/backend/users/2/", userDetailHandler);
 }
 
 function createRequest(method, url, responseHandler) {
@@ -41,6 +42,10 @@ function usersHandler(users) {
 	users.forEach(appendUserRow);
 }
 
+function userDetailHandler(users) {
+	users.forEach(printSpecificUser);
+}
+
 function appendUserRow(user) {
 
     var row = "<tr>" +
@@ -50,4 +55,8 @@ function appendUserRow(user) {
 
 	if(tableBody = document.getElementById("tableBody"))
 		tableBody.innerHTML += row;
+}
+
+function printSpecificUser(user) {
+	document.getElementById("specific").innerHTML = user.id + ":" + user.username;
 }

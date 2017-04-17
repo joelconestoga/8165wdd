@@ -9,8 +9,27 @@ def index(request):
 	return HttpResponse({'somefield':'somevalue'}, status=200, content_type='application/json')
 
 
+def user_detail(request, id):
+    if request.method == 'GET':
+
+        users = User.objects.filter(id=id)
+        
+        data = []
+
+        for user in users:
+            data.append({
+                'id': user.id,
+                'username': user.username
+            })
+
+        data = json.dumps(data)
+
+        return HttpResponse(data, status=200, content_type='application/json')
+
+
 def users(request):
 
+    print("wrong method!!!")
     if request.method == 'GET':
 
         users = User.objects.all()
