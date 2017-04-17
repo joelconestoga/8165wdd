@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+	{% load staticfiles %}
+	<script type="text/javascript" src="{% static 'script/queries.js' %}"></script>
 	<title>Front End</title>
 </head>
 <body>
 	<h1>This is the Front End Content</h1>
 	
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+			</tr>
+		</thead>
+		<tbody id="tableBody">
+			
+		</tbody>
+	</table>
 
 </body>
 </html>

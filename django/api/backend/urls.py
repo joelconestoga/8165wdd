@@ -5,4 +5,5 @@ app_name = 'backend'
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
+	url(r'^users/$', views.users, name='users'),
 ]
