@@ -5,6 +5,7 @@ window.onload = function() {
 function getAllUsers() {
 	createRequest("GET", "/backend/users/", usersHandler);
 	createRequest("GET", "/backend/users/2/", userDetailHandler);
+	createRequest("GET", "/backend/users/2/transactions", transactionsHandler);
 }
 
 function createRequest(method, url, responseHandler) {
@@ -62,6 +63,10 @@ function userDetailHandler(users) {
 	users.forEach(printSpecificUser);
 }
 
+function transactionsHandler(transactions) {
+	transactions.forEach(appendTransactionRow);
+}
+
 function appendUserRow(user) {
 
     var row = "<tr>" +
@@ -69,8 +74,20 @@ function appendUserRow(user) {
 		      "<td>" + user.username + "</td>" +
 		      "</tr>";
 
-	if(tableBody = document.getElementById("tableBody"))
-		tableBody.innerHTML += row;
+	if(users = document.getElementById("table-users"))
+		users.innerHTML += row;
+}
+
+function appendTransactionRow(transaction) {
+
+    var row = "<tr>" +
+		      "<td>" + transaction.id + "</td>" +
+		      "<td>" + transaction.name + "</td>" +
+		      "<td>" + transaction.value + "</td>" +
+		      "</tr>";
+
+	if(trans = document.getElementById("table-transactions"))
+		trans.innerHTML += row;
 }
 
 function printSpecificUser(user) {

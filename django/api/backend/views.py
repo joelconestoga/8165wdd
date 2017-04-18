@@ -3,10 +3,52 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from .models import Transaction
+from decimal import Decimal
 
 # Create your views here.
 def index(request):
-	return HttpResponse({'somefield':'somevalue'}, status=200, content_type='application/json')
+    return HttpResponse({}, status=200, content_type='application/json')
+
+def user_transactions(request, id):
+    if not is_authenticated(request):
+        return HttpResponse({'error':'Invalid Login.'}, status=403, content_type='application/json')
+
+    transactions = Transaction.objects.filter(user=request.user)
+
+    elements = []
+
+    for trans in transactions:
+        elements.append({
+            'id': trans.id,
+            'name': trans.name,
+            'value': trans.value
+        })
+
+    return createResponse(elements)
+
+
+def is_authenticated(request):
+
+    #print("TOKEN ---- >" + request.META['HTTP_AUTHORIZATION'])
+    return True
+
+
+def login_in(request):
+
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username, password=password)
+
+    '''
+    if user is None:
+        return render(request, 'manager/log_in.html', {'error_message': 'Invalid login/password.'})
+    '''
+
+    my_login(request, user)
+    
+    return index(request)
 
 
 def user_detail(request, id):
@@ -26,8 +68,6 @@ def user_detail(request, id):
 
 
 def users(request):
-
-    print("TOKEN ---- >" + request.META['HTTP_AUTHORIZATION'])
 
     if request.method == 'GET':
 
@@ -61,6 +101,13 @@ def createResponse(elements):
 
     response = {'token':{'value':'server token'}}
     response['elements'] = elements
-    response = json.dumps(response)
+    response = json.dumps(response, default=default)
 
     return HttpResponse(response, status=200, content_type='application/json')
+
+
+def default(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError
+

@@ -2,28 +2,42 @@
 <html>
 <head>
 	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<script type="text/javascript" src="{% static 'script/queries.js' %}"></script>
 	<title>Front End</title>
 </head>
 <body>
 	<h1>This is the Front End Content</h1>
 	
-	<table>
+	<table class="rwd-table">
 		<thead>
 			<tr>
 				<th>ID</th>
 				<th>Username</th>
 			</tr>
 		</thead>
-		<tbody id="tableBody">
+		<tbody id="table-users">
 			
 		</tbody>
 	</table>
 
 	<h2 id="specific"></h2>
 
-	<h2 id="token-sent"></h2>
-	<h2 id="token-received"></h2>
+	<h3 id="token-sent"></h2>
+	<h3 id="token-received"></h2>
+
+	<table class="rwd-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Description</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody id="table-transactions">
+			
+		</tbody>
+	</table>
 
 </body>
 </html>
