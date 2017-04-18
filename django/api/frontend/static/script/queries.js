@@ -20,7 +20,9 @@ function createRequest(method, url, responseHandler) {
 
         	case 200:
 				var data = JSON.parse(request.responseText);
-				responseHandler(data);
+				console.log(data);
+				tokenHandler(data['token']);
+				responseHandler(data['elements']);
 				break;
 
 			case 400:
@@ -35,7 +37,21 @@ function createRequest(method, url, responseHandler) {
     }
 
     request.open(method, url, true);
+    request.setRequestHeader('Authorization', localToken());
     request.send();
+}
+
+function localToken() {
+	return 'Bearer ' + 'secretToken';
+}
+
+function tokenHandler(token) {
+	
+	if(sent = document.getElementById("token-sent"))
+		sent.innerHTML = "Token sent: " + localToken();
+	
+	if(received = document.getElementById("token-received"))
+		received.innerHTML = "Token received: " + token.value;
 }
 
 function usersHandler(users) {
@@ -58,5 +74,6 @@ function appendUserRow(user) {
 }
 
 function printSpecificUser(user) {
-	document.getElementById("specific").innerHTML = user.id + ":" + user.username;
+	if(specific = document.getElementById("specific"))
+		specific.innerHTML = "Specific user: " + user.id + " " + user.username;
 }

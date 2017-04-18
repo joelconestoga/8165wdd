@@ -13,38 +13,35 @@ def user_detail(request, id):
     if request.method == 'GET':
 
         users = User.objects.filter(id=id)
-        
-        data = []
+
+        elements = []
 
         for user in users:
-            data.append({
+            elements.append({
                 'id': user.id,
                 'username': user.username
             })
 
-        data = json.dumps(data)
-
-        return HttpResponse(data, status=200, content_type='application/json')
+        return createResponse(elements)
 
 
 def users(request):
 
-    print("wrong method!!!")
+    print("TOKEN ---- >" + request.META['HTTP_AUTHORIZATION'])
+
     if request.method == 'GET':
 
         users = User.objects.all()
 
-        data = []
+        elements = []
 
         for user in users:
-            data.append({
+            elements.append({
                 'id': user.id,
                 'username': user.username
             })
 
-        data = json.dumps(data)
-
-        return HttpResponse(data, status=200, content_type='application/json')
+        return createResponse(elements)
 
     else:
 
@@ -59,3 +56,11 @@ def users(request):
 
         return HttpResponse(user, status=201, content_type='application/json')
 
+
+def createResponse(elements):
+
+    response = {'token':{'value':'server token'}}
+    response['elements'] = elements
+    response = json.dumps(response)
+
+    return HttpResponse(response, status=200, content_type='application/json')
