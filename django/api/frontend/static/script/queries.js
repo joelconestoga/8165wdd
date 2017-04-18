@@ -1,11 +1,12 @@
 window.onload = function() {
+	window.localStorage.setItem('token', '2, 2017, 4, 18, 1, 35, 13');
 	getAllUsers();
 }
 
 function getAllUsers() {
 	createRequest("GET", "/backend/users/", usersHandler);
-	createRequest("GET", "/backend/users/2/", userDetailHandler);
-	createRequest("GET", "/backend/users/2/transactions", transactionsHandler);
+	createRequest("GET", "/backend/users/"+LocalToken.userId()+"/", userDetailHandler);
+	createRequest("GET", "/backend/users/"+LocalToken.userId()+"/transactions", transactionsHandler);
 }
 
 function createRequest(method, url, responseHandler) {
@@ -27,29 +28,33 @@ function createRequest(method, url, responseHandler) {
 				break;
 
 			case 400:
-				alert('There was an error 400');
+				console.log('There was an error 400');
 				break;
 
 			default:
 				msg = 'something else other than 200 was returned: ' + request.status;
-				alert(msg);
 				console.log(msg);
         }
     }
 
     request.open(method, url, true);
-    request.setRequestHeader('Authorization', localToken());
+    request.setRequestHeader('Authorization', LocalToken.value());
     request.send();
 }
 
-function localToken() {
-	return 'Bearer ' + 'secretToken';
+var LocalToken = {
+	value: function() { 
+		return window.localStorage.getItem('token');
+	},
+	userId: function() {
+		return this.value()[0];
+	}
 }
 
 function tokenHandler(token) {
 	
 	if(sent = document.getElementById("token-sent"))
-		sent.innerHTML = "Token sent: " + localToken();
+		sent.innerHTML = "Token sent: " + token.value;
 	
 	if(received = document.getElementById("token-received"))
 		received.innerHTML = "Token received: " + token.value;

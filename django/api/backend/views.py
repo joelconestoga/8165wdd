@@ -1,9 +1,11 @@
 import json
+import datetime
+import pytz
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .models import Transaction
+from .models import Transaction, UserSession
 from decimal import Decimal
 
 # Create your views here.
@@ -14,7 +16,7 @@ def user_transactions(request, id):
     if not is_authenticated(request):
         return HttpResponse({'error':'Invalid Login.'}, status=403, content_type='application/json')
 
-    transactions = Transaction.objects.filter(user=request.user)
+    transactions = Transaction.objects.filter(user_id=id)
 
     elements = []
 
@@ -30,8 +32,23 @@ def user_transactions(request, id):
 
 def is_authenticated(request):
 
-    #print("TOKEN ---- >" + request.META['HTTP_AUTHORIZATION'])
-    return True
+    token = request.META['HTTP_AUTHORIZATION']
+
+    data = token.split(',')
+    expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
+        int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
+
+    sessions = UserSession.objects.filter(user_id=data[0])
+
+    if len(sessions) < 1:
+        return False
+
+    session = sessions[0]
+
+    print("============ TOKEN expires at:" + str(expiresAt) + 
+        " / session.epiration:" + str(session.epiration))
+
+    return expiresAt < session.epiration
 
 
 def login_in(request):
