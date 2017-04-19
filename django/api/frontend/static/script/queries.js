@@ -1,5 +1,5 @@
 window.onload = function() {
-	window.localStorage.setItem('token', '2, 2017, 4, 18, 1, 35, 13');
+	window.localStorage.setItem('token', '1, 2017, 4, 18, 1, 35, 13');
 	getAllUsers();
 }
 
@@ -53,11 +53,8 @@ var LocalToken = {
 
 function tokenHandler(token) {
 	
-	if(sent = document.getElementById("token-sent"))
-		sent.innerHTML = "Token sent: " + token.value;
-	
-	if(received = document.getElementById("token-received"))
-		received.innerHTML = "Token received: " + token.value;
+	if(footer = document.getElementById("footer"))
+		footer.innerHTML = "TOKEN [ sent: " + token.value + " / received: " + token.value +" ]";
 }
 
 function usersHandler(users) {
@@ -96,6 +93,12 @@ function appendTransactionRow(transaction) {
 }
 
 function printSpecificUser(user) {
-	if(specific = document.getElementById("specific"))
-		specific.innerHTML = "Specific user: " + user.id + " " + user.username;
+	if(element = document.getElementById("user-legend"))
+		element.innerHTML = "User: " + user.username;
+	if(element = document.getElementById("first-name"))
+		element.innerHTML = "First name: " + user.first_name;
+	if(element = document.getElementById("last-name"))
+		element.innerHTML = "Last name: " + user.last_name;
+	if(element = document.getElementById("email"))
+		element.innerHTML = "Email: " + user.email;
 }
