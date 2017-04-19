@@ -1,0 +1,41 @@
+{% extends 'frontend/base.html' %}
+
+	{% load staticfiles %}
+
+	{% block head %}
+		<script type="text/javascript" src="{% static 'script/transactions.js' %}"></script>
+	{% endblock %}
+
+{% block body %}
+	<nav id="nav_menu">
+		<ul>
+	    	<li><a href="">Home</a></li>
+	    	<li><a href="">Users</a></li>
+	    	<li><a href="">Categories</a></li>
+	    	<li><a onclick="log_out()" href="#">Log Out</a></li>
+		</ul>
+	</nav>
+
+	<br/>
+
+	<fieldset>
+		<legend id="user-legend">User</legend>
+		<p class="user-detail" id="first-name"></p>
+		<p class="user-detail" id="last-name"></p>
+		<p class="user-detail" id="email"></p>
+	</fieldset>
+
+	<table class="rwd-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Description</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody id="table-transactions">
+			
+		</tbody>
+	</table>
+
+{% endblock %}

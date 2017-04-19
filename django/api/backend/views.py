@@ -7,14 +7,23 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import Transaction, UserSession
 from decimal import Decimal
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
-    return HttpResponse({}, status=200, content_type='application/json')
+    return createResponse([])
+
+
+@csrf_exempt
+def log_out(request, id):
+    session = UserSession.objects.get(user_id=id)
+    session.delete()
+    return createResponse([])
+
 
 def user_transactions(request, id):
     if not is_authenticated(request):
-        return HttpResponse({'error':'Invalid Login.'}, status=403, content_type='application/json')
+        return createResponse([])
 
     transactions = Transaction.objects.filter(user_id=id)
 
@@ -33,6 +42,8 @@ def user_transactions(request, id):
 def is_authenticated(request):
 
     token = request.META['HTTP_AUTHORIZATION']
+
+    print(token)
 
     data = token.split(',')
     expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
