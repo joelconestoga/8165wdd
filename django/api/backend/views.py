@@ -21,7 +21,10 @@ def log_in(request):
 
     username = request.POST['username']
     password = request.POST['password']
-
+   
+    print("------------------------------------>" + str(username))
+    print("------------------------------------>" + str(password))
+    
     user = authenticate(username=username, password=password)
 
     session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
@@ -31,14 +34,14 @@ def log_in(request):
     
     return createResponse([], {'token':{'value':token}})
 
-    '''
-    if user is None:
-        return render(request, 'manager/log_in.html', {'error_message': 'Invalid login/password.'})
-    
 
-    my_login(request, user)
-    
-    return index(request)'''
+def createResponse(elements, token={'token':{'value':'server token'}}):
+
+    response = token
+    response['elements'] = elements
+    response = json.dumps(response, default=default)
+
+    return HttpResponse(response, status=200, content_type='application/json')
 
 
 @csrf_exempt
@@ -136,15 +139,6 @@ def users(request):
         })
 
         return HttpResponse(user, status=201, content_type='application/json')
-
-
-def createResponse(elements, token={'token':{'value':'server token'}}):
-
-    response = token
-    response['elements'] = elements
-    response = json.dumps(response, default=default)
-
-    return HttpResponse(response, status=200, content_type='application/json')
 
 
 def default(obj):

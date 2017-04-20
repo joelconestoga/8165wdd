@@ -44,6 +44,8 @@ function createRequest(method, url, responseHandler) {
 function tokenHandler(token) {
 	if(footer = document.getElementById("footer"))
 		footer.innerHTML = "TOKEN [ sent: " + LocalToken.value() + " / received: " + token.value +" ]";
+
+	window.localStorage.setItem('token', token);
 }
 
 function loadUser() {
