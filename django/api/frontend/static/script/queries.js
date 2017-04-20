@@ -1,13 +1,3 @@
-
-var LocalToken = {
-	value: function() { 
-		return window.localStorage.getItem('token');
-	},
-	userId: function() {
-		return this.value() ? this.value()[0] : "0";
-	}
-}
-
 function redirect(target) {
 	console.log(" --------- redirecting from " + window.location.toString() + " --------- to " + target);
 	window.location.replace(target);
@@ -42,10 +32,23 @@ function createRequest(method, url, responseHandler) {
 }
 
 function tokenHandler(token) {
+	if(!token)
+		return;
+
 	if(footer = document.getElementById("footer"))
 		footer.innerHTML = "TOKEN [ sent: " + LocalToken.value() + " / received: " + token.value +" ]";
 
-	window.localStorage.setItem('token', token);
+	window.localStorage.setItem('token', token.value);
+	redirect("/frontend/transactions/");
+}
+
+var LocalToken = {
+	value: function() { 
+		return window.localStorage.getItem('token');
+	},
+	userId: function() {
+		return this.value() ? this.value()[0] : "0";
+	}
 }
 
 function loadUser() {

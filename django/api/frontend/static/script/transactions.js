@@ -1,7 +1,8 @@
 window.onload = function() {
 	console.log(" --------- Transactions loading");
-	createRequest("GET", "/backend/users/"+LocalToken.userId()+"/", userDetailHandler);
-	createRequest("GET", "/backend/users/"+LocalToken.userId()+"/transactions", transactionsHandler);
+
+	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/", userDetailHandler);
+	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", transactionsHandler);
 }
 
 function transactionsHandler(transactions) {

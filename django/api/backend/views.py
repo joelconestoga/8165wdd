@@ -22,20 +22,25 @@ def log_in(request):
     username = request.POST['username']
     password = request.POST['password']
    
-    print("------------------------------------>" + str(username))
-    print("------------------------------------>" + str(password))
-    
     user = authenticate(username=username, password=password)
 
-    session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
-    session.save()
-
-    token = str(user.id) + ',' + session.epiration.strftime("%Y,%m,%d,%H,%M,%S")
+    token = createSession(user)
     
     return createResponse([], {'token':{'value':token}})
 
 
-def createResponse(elements, token={'token':{'value':'server token'}}):
+def createSession(user):
+    session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
+    session.save()
+
+    return createToken(user, session)
+
+
+def createToken(user, session):
+    return str(user.id) + ',' + session.epiration.strftime("%Y,%m,%d,%H,%M,%S")
+
+
+def createResponse(elements, token = {}):
 
     response = token
     response['elements'] = elements
@@ -73,8 +78,6 @@ def is_authenticated(request):
 
     token = request.META['HTTP_AUTHORIZATION']
 
-    print(token)
-
     data = token.split(',')
     expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
         int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
@@ -89,7 +92,10 @@ def is_authenticated(request):
     print("============ TOKEN expires at:" + str(expiresAt) + 
         " / session.epiration:" + str(session.epiration))
 
-    return expiresAt < session.epiration
+    # we're not validating the token expiration yet...
+    #return expiresAt < session.epiration
+
+    return True
 
 
 def user_detail(request, id):
