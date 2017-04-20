@@ -19,9 +19,11 @@ def index(request):
 @csrf_exempt
 def log_in(request):
 
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.POST.get('username')
+    password = request.POST.get('password')
 
+    print(username)
+    
     user = authenticate(username=username, password=password)
 
     session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
