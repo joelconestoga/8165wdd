@@ -1,5 +1,6 @@
 import json
 import datetime
+from time import strftime
 import pytz
 
 from django.shortcuts import render
@@ -8,10 +9,36 @@ from django.contrib.auth.models import User
 from .models import Transaction, UserSession
 from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
 
 # Create your views here.
 def index(request):
     return createResponse([])
+
+
+@csrf_exempt
+def log_in(request):
+
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username, password=password)
+
+    session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
+    session.save()
+
+    token = str(user.id) + ',' + session.epiration.strftime("%Y,%m,%d,%H,%M,%S")
+    
+    return createResponse([], {'token':{'value':token}})
+
+    '''
+    if user is None:
+        return render(request, 'manager/log_in.html', {'error_message': 'Invalid login/password.'})
+    
+
+    my_login(request, user)
+    
+    return index(request)'''
 
 
 @csrf_exempt
@@ -60,23 +87,6 @@ def is_authenticated(request):
         " / session.epiration:" + str(session.epiration))
 
     return expiresAt < session.epiration
-
-
-def login_in(request):
-
-    username = request.POST['username']
-    password = request.POST['password']
-
-    user = authenticate(username=username, password=password)
-
-    '''
-    if user is None:
-        return render(request, 'manager/log_in.html', {'error_message': 'Invalid login/password.'})
-    '''
-
-    my_login(request, user)
-    
-    return index(request)
 
 
 def user_detail(request, id):
@@ -128,9 +138,9 @@ def users(request):
         return HttpResponse(user, status=201, content_type='application/json')
 
 
-def createResponse(elements):
+def createResponse(elements, token={'token':{'value':'server token'}}):
 
-    response = {'token':{'value':'server token'}}
+    response = token
     response['elements'] = elements
     response = json.dumps(response, default=default)
 
