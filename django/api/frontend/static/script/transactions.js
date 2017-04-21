@@ -1,8 +1,8 @@
 window.onload = function() {
 	console.log(" --------- Transactions loading");
 
-	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/", userDetailHandler);
-	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", transactionsHandler);
+	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/", null, userDetailHandler, null);
+	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", null, transactionsHandler, null);
 }
 
 function transactionsHandler(transactions) {
@@ -42,7 +42,7 @@ function appendTransactionRow(transaction) {
 
 function log_out() {
 	redirect("/frontend/login/");
-	createRequest("POST", "/backend/users/"+LocalToken.userId()+"/log_out/", logoutHandler);
+	createRequest("POST", "/backend/users/"+LocalToken.userId()+"/log_out/", null, logoutHandler, null);
 	window.localStorage.removeItem('token');
 }
 
@@ -54,3 +54,24 @@ function logoutHandler(error) {
 			footer.innerHTML = "TOKEN [ local: - ]";
 	}
 }
+
+
+function loadUser() {
+	//createRequest("GET", "/backend/users/", usersHandler);
+}
+
+function usersHandler(users) {
+	users.forEach(appendUserRow);
+}
+
+function appendUserRow(user) {
+
+    var row = "<tr>" +
+		      "<td>" + user.id + "</td>" +
+		      "<td>" + user.username + "</td>" +
+		      "</tr>";
+
+	if(users = document.getElementById("table-users"))
+		users.innerHTML += row;
+}
+

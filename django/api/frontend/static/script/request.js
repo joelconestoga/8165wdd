@@ -1,9 +1,4 @@
-function redirect(target) {
-	console.log(" --------- redirecting from " + window.location.toString() + " --------- to " + target);
-	window.location.replace(target);
-}
-
-function createRequest(method, url, responseHandler) {
+function createRequest(method, url, input, responseHandler, errorHandler) {
 
 	console.log(" --------- REQUEST: " + url);
 
@@ -14,21 +9,35 @@ function createRequest(method, url, responseHandler) {
         if (request.readyState != XMLHttpRequest.DONE)
         	return;
 
-        if (request.status != 200)
+        if (request.status != 200) {
 			console.log('ERROR. Status returned: ' + request.status);
 
-		var data = JSON.parse(request.responseText);
+			if (errorHandler)
+				errorHandler(request)
+        }
+
+		var response = JSON.parse(request.responseText);
 
 		console.log(" --------- RESPONSE:");
-		console.log(data);
+		console.log(response);
 
-		tokenHandler(data['token']);
-		responseHandler(data['elements']);
+		tokenHandler(response['token']);
+		
+		if (responseHandler)
+			responseHandler(response['elements']);
+
+		if (errorHandler)
+			errorHandler(request);
     }
 
     request.open(method, url, true);
     request.setRequestHeader('Authorization', LocalToken.value());
-    request.send();
+    request.send(input);
+}
+
+function redirect(target) {
+	console.log(" --------- redirecting from " + window.location.toString() + " --------- to " + target);
+	window.location.replace(target);
 }
 
 function tokenHandler(token) {
@@ -51,22 +60,4 @@ var LocalToken = {
 	}
 }
 
-function loadUser() {
-	//createRequest("GET", "/backend/users/", usersHandler);
-}
-
-function usersHandler(users) {
-	users.forEach(appendUserRow);
-}
-
-function appendUserRow(user) {
-
-    var row = "<tr>" +
-		      "<td>" + user.id + "</td>" +
-		      "<td>" + user.username + "</td>" +
-		      "</tr>";
-
-	if(users = document.getElementById("table-users"))
-		users.innerHTML += row;
-}
 
