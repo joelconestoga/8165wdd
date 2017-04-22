@@ -13,7 +13,7 @@ from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 
-CONST_SECONDS_TO_EXPIRE = 30
+CONST_SECONDS_TO_EXPIRE = 300
 
 # Create your views here.
 def index(request):
@@ -32,6 +32,8 @@ def log_in(request):
 
         if user is None:
             return HttpResponseForbidden()
+
+        log("user.is_staff", user.is_staff)
 
         token = createSession(user)
         
@@ -76,26 +78,39 @@ def createResponse(elements, token = {}):
 
 
 @csrf_exempt
-def is_authenticated(request):
+def is_authenticated(request, staff_required=False):
 
-    token = request.META['HTTP_AUTHORIZATION']
+    try:
+        user_id = get_header_id(request)
+
+        if staff_required and not is_staff(user_id):
+            return False
+
+        session = UserSession.objects.get(user_id=user_id)
+        
+        return session.expiration > timezone.now()
     
-    if token == "null":
+    except Exception as e:
+        log("Exception in is_authenticated", str(e))
         return False
 
-    data = token.split(',')
-    sessions = UserSession.objects.filter(user_id=data[0])
-    
-    if len(sessions) < 1:
-        return False
-    
-    session = sessions[0]
-    
-    print("============ TOKEN expires at:" + str(session.expiration))
-    #expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
-     #   int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
 
-    return session.expiration > timezone.now()
+def get_header_id(request):
+    try:
+        token = request.META['HTTP_AUTHORIZATION']
+        return 0 if token == "null" else token.split(',')[0]
+    except Exception as e:
+        log("Exception in get_header_id", str(e))
+        return 0
+
+
+def is_staff(id):
+    try:
+       user = User.objects.get(id=id)
+       return user.is_staff
+    except Exception as e:
+        log("Exception in is_staff", str(e))
+        return False
 
 
 @csrf_exempt
@@ -146,6 +161,9 @@ def users(request):
 
     if request.method == 'GET':
 
+        if not is_authenticated(request, True):
+            return HttpResponseForbidden()
+
         users = User.objects.all()
 
         elements = []
@@ -153,7 +171,9 @@ def users(request):
         for user in users:
             elements.append({
                 'id': user.id,
-                'username': user.username
+                'username': user.username,
+                'email': user.email,
+                'is_staff': user.is_staff,
             })
 
         return createResponse(elements)
@@ -176,4 +196,13 @@ def default(obj):
     if isinstance(obj, Decimal):
         return str(obj)
     raise TypeError
+
+
+def log(label, info=""):
+    print(" - SERVER - - - - - - - - - - - - > " + label + ": " + str(info))
+
+
+
+
+
 

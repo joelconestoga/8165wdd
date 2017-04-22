@@ -21,7 +21,7 @@ function createRequest(method, url, input, responseHandler, errorHandler) {
 		
 		response = JSON.parse(request.responseText);
 
-		console.log(" --------- RESPONSE:");
+		console.log(" --------- RESPONSE for " + request.responseURL);
 		console.log(response);
 
 		if (responseHandler)
@@ -48,6 +48,15 @@ function tokenHandler(token) {
 		footer.innerHTML = "TOKEN [ sent: " + LocalToken.value() + " / received: " + token.value +" ]";
 
 	window.localStorage.setItem('token', token.value);
+}
+
+function log(label, info) {
+    log = "> ";
+    
+    if (label.length > 0)
+    	log += label + ": ";
+
+   	console.log(log += info);
 }
 
 var LocalToken = {

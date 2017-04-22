@@ -5,7 +5,7 @@
 	{% block head %}
 		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
 		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/transactions.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/users.js' %}"></script>
 	{% endblock %}
 
 {% block content %}
@@ -14,11 +14,12 @@
 		<thead>
 			<tr>
 				<th>ID</th>
-				<th>Description</th>
-				<th>Value</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Staff</th>
 			</tr>
 		</thead>
-		<tbody id="table-transactions">
+		<tbody id="table-users">
 			
 		</tbody>
 	</table>

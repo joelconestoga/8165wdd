@@ -5,8 +5,6 @@
 }
 
 fieldset {
-  margin-top: 40px;
-  margin-bottom: 40px;
   margin-right: 10px;
   margin-left: 10px;
 }
@@ -18,8 +16,10 @@ footer {
 }
 
 #nav_menu {
-  margin-top: 10px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 
 #nav_menu ul {
@@ -56,8 +56,8 @@ footer {
 
 
 .rwd-table {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-right: 10px;
   margin-left: 10px;
 
