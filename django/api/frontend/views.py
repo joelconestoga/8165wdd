@@ -10,6 +10,10 @@ def login(request):
 	return render(request, 'frontend/login.html')
 
 
+def register(request):
+	return render(request, 'frontend/register.html')
+
+
 def users(request):
 	return render(request, 'frontend/users.html')
 

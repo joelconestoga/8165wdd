@@ -33,8 +33,6 @@ def log_in(request):
         if user is None:
             return HttpResponseForbidden()
 
-        log("user.is_staff", user.is_staff)
-
         token = createSession(user)
         
         return createResponse([], {'token':{'value':token}})
@@ -157,6 +155,7 @@ def user_detail(request, id):
         return createResponse(elements)
 
 
+@csrf_exempt
 def users(request):
 
     if request.method == 'GET':
@@ -180,16 +179,32 @@ def users(request):
 
     else:
 
-        data = json.loads(request.body)
+        try:
+            
+            username = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            password = request.POST['password']
+            is_staff = request.POST['is_staff']
+            
+            user = User.objects.create(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                is_staff=is_staff,
+            )
+            
+            user.set_password(password)
+            user.save()
 
-        user = User.objects.create(username=data.get('username'))
+            token = createSession(user)
+            return createResponse([], {'token':{'value':token}})
 
-        user = json.dumps({
-            'id': user.id,
-            'username': user.username
-        })
-
-        return HttpResponse(user, status=201, content_type='application/json')
+        except Exception as e:
+            log("Exception CREATING USER", str(e))
+            return HttpResponseForbidden()
 
 
 def default(obj):
