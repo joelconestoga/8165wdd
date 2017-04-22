@@ -10,12 +10,10 @@ function validateSession() {
 }
 
 function sessionHandler() {
-	console.log(" --------- CHAMOU sessionHandler");
 	redirect("/frontend/transactions/");
 }
 
 function sessionErrorHandler() {
-	console.log(" --------- CHAMOU errorHANDLER");
 	redirect("/frontend/login/");
 }
 
