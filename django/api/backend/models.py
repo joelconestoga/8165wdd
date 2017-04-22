@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from datetime import datetime    
+from django.utils import timezone
 
 # Create your models here.
 class Category(models.Model):
@@ -22,7 +22,7 @@ class Transaction(models.Model):
 
 class UserSession(models.Model):
     user = models.ForeignKey(User, default=1)
-    logged_in = models.DateTimeField(default=datetime.now, blank=True)
-    epiration = models.DateTimeField()
+    logged_in = models.DateTimeField(default=timezone.now, blank=True)
+    expiration = models.DateTimeField()
 
 

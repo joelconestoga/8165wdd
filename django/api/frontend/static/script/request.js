@@ -16,7 +16,10 @@ function createRequest(method, url, input, responseHandler, errorHandler) {
 				return errorHandler(request)
         }
 
-		var response = JSON.parse(request.responseText);
+		if(!request.responseText)
+			return;
+		
+		response = JSON.parse(request.responseText);
 
 		console.log(" --------- RESPONSE:");
 		console.log(response);

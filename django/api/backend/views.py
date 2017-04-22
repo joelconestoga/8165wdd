@@ -58,13 +58,13 @@ def deleteExistingSession(user):
 def createNewSession(user):
     session = UserSession.objects.create(
         user=user, 
-        epiration=timezone.now()+timedelta(seconds=CONST_SECONDS_TO_EXPIRE))
+        expiration=timezone.now()+timedelta(seconds=CONST_SECONDS_TO_EXPIRE))
     session.save()
     return session
     
 
 def createToken(user, session):
-    return str(user.id) + ',' + session.epiration.strftime("%Y,%m,%d,%H,%M,%S")
+    return str(user.id) + ',' + session.expiration.strftime("%Y,%m,%d,%H,%M,%S")
 
 
 def createResponse(elements, token = {}):
@@ -91,11 +91,11 @@ def is_authenticated(request):
     
     session = sessions[0]
     
-    print("============ TOKEN expires at:" + str(session.epiration))
+    print("============ TOKEN expires at:" + str(session.expiration))
     #expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
      #   int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
 
-    return session.epiration > timezone.now()
+    return session.expiration > timezone.now()
 
 
 @csrf_exempt
