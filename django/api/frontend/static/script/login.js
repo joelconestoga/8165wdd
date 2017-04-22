@@ -14,8 +14,16 @@ function bindSubmitListener() {
 			formData.append('username', document.getElementById('login-username').value);
 			formData.append('password', document.getElementById('login-password').value);
 
-			createRequest("POST", "/backend/log_in/", formData);
+			createRequest("POST", "/backend/log_in/", formData, loginHandler, loginErrorHandler);
 
 		},false);		
  	}	
+}
+
+function loginHandler() {
+	redirect("/frontend/transactions/");
+}
+
+function loginErrorHandler() {
+	redirect("/frontend/login/");
 }

@@ -1,15 +1,19 @@
 import json
 import datetime
+from datetime import timedelta
 from time import strftime
 import pytz
+from django.utils import timezone
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.models import User
 from .models import Transaction, UserSession
 from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
+
+CONST_SECONDS_TO_EXPIRE = 30
 
 # Create your views here.
 def index(request):
@@ -19,34 +23,79 @@ def index(request):
 @csrf_exempt
 def log_in(request):
 
-    username = request.POST['username']
-    password = request.POST['password']
-   
-    user = authenticate(username=username, password=password)
+    if request.method == 'POST':
 
-    token = createSession(user)
-    
-    return createResponse([], {'token':{'value':token}})
+        username = request.POST['username']
+        password = request.POST['password']
+       
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            return HttpResponseForbidden()
+
+        token = createSession(user)
+        
+        return createResponse([], {'token':{'value':token}})
+
+    else:
+        if is_authenticated(request):
+            return createResponse([])
+        else:
+            return HttpResponseForbidden()
 
 
 def createSession(user):
-    session = UserSession.objects.create(user=user, epiration=datetime.datetime.now())
-    session.save()
-
+    deleteExistingSession(user)
+    session = createNewSession(user)
     return createToken(user, session)
 
+
+def deleteExistingSession(user):
+    for session in UserSession.objects.filter(user=user):
+        session.delete()
+
+
+def createNewSession(user):
+    session = UserSession.objects.create(
+        user=user, 
+        epiration=timezone.now()+timedelta(seconds=CONST_SECONDS_TO_EXPIRE))
+    session.save()
+    return session
+    
 
 def createToken(user, session):
     return str(user.id) + ',' + session.epiration.strftime("%Y,%m,%d,%H,%M,%S")
 
 
 def createResponse(elements, token = {}):
-
     response = token
     response['elements'] = elements
     response = json.dumps(response, default=default)
 
     return HttpResponse(response, status=200, content_type='application/json')
+
+
+@csrf_exempt
+def is_authenticated(request):
+
+    token = request.META['HTTP_AUTHORIZATION']
+    
+    if token == "null":
+        return False
+
+    data = token.split(',')
+    sessions = UserSession.objects.filter(user_id=data[0])
+    
+    if len(sessions) < 1:
+        return False
+    
+    session = sessions[0]
+    
+    print("============ TOKEN expires at:" + str(session.epiration))
+    #expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
+     #   int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
+
+    return session.epiration > timezone.now()
 
 
 @csrf_exempt
@@ -58,7 +107,7 @@ def log_out(request, id):
 
 def user_transactions(request, id):
     if not is_authenticated(request):
-        return createResponse([])
+        return HttpResponseForbidden()
 
     transactions = Transaction.objects.filter(user_id=id)
 
@@ -72,30 +121,6 @@ def user_transactions(request, id):
         })
 
     return createResponse(elements)
-
-
-def is_authenticated(request):
-
-    token = request.META['HTTP_AUTHORIZATION']
-
-    data = token.split(',')
-    expiresAt = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), 
-        int(data[4]), int(data[5]), int(data[6]), tzinfo=pytz.UTC)
-
-    sessions = UserSession.objects.filter(user_id=data[0])
-
-    if len(sessions) < 1:
-        return False
-
-    session = sessions[0]
-
-    print("============ TOKEN expires at:" + str(expiresAt) + 
-        " / session.epiration:" + str(session.epiration))
-
-    # we're not validating the token expiration yet...
-    #return expiresAt < session.epiration
-
-    return True
 
 
 def user_detail(request, id):

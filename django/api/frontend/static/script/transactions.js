@@ -1,16 +1,20 @@
 window.onload = function() {
 	console.log(" --------- Transactions loading");
 
-	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/", null, userDetailHandler, null);
-	createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", null, transactionsHandler, null);
+	if (token = window.localStorage.getItem('token')) {
+		createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", null, transactionsHandler, transactionErrorHandler);
+		createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/", null, userDetailHandler, null);
+	} else {
+		transactionErrorHandler()		
+	}
 }
 
 function transactionsHandler(transactions) {
-	if(transactions.length > 0) {
-		transactions.forEach(appendTransactionRow);
-	} else {
-		redirect("/frontend/login/");
-	}
+	transactions.forEach(appendTransactionRow);
+}
+
+function transactionErrorHandler() {
+	redirect("/frontend/login/");
 }
 
 function userDetailHandler(users) {

@@ -13,7 +13,7 @@ function createRequest(method, url, input, responseHandler, errorHandler) {
 			console.log('ERROR. Status returned: ' + request.status);
 
 			if (errorHandler)
-				errorHandler(request)
+				return errorHandler(request)
         }
 
 		var response = JSON.parse(request.responseText);
@@ -21,17 +21,14 @@ function createRequest(method, url, input, responseHandler, errorHandler) {
 		console.log(" --------- RESPONSE:");
 		console.log(response);
 
-		tokenHandler(response['token']);
-		
 		if (responseHandler)
 			responseHandler(response['elements']);
 
-		if (errorHandler)
-			errorHandler(request);
+		tokenHandler(response['token']);
     }
 
     request.open(method, url, true);
-    request.setRequestHeader('Authorization', LocalToken.value());
+    request.setRequestHeader('Authorization', window.localStorage.getItem('token'));
     request.send(input);
 }
 
@@ -48,7 +45,6 @@ function tokenHandler(token) {
 		footer.innerHTML = "TOKEN [ sent: " + LocalToken.value() + " / received: " + token.value +" ]";
 
 	window.localStorage.setItem('token', token.value);
-	redirect("/frontend/transactions/");
 }
 
 var LocalToken = {
