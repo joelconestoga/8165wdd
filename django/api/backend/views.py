@@ -138,12 +138,12 @@ def user_category_transactions(request, user_id, category_id):
 
 def transactions_response(transactions):
     elements = []
-
     for trans in transactions:
         elements.append({
             'id': trans.id,
             'name': trans.name,
-            'value': trans.value
+            'value': trans.value,
+            'category': trans.category.name,
         })
 
     return createResponse(elements)

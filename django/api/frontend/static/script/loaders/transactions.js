@@ -26,6 +26,7 @@ function appendTransactionRow(transaction) {
 		      "<td>" + transaction.id + "</td>" +
 		      "<td>" + transaction.name + "</td>" +
 		      "<td>" + transaction.value + "</td>" +
+		      "<td>" + transaction.category + "</td>" +
 		      "</tr>";
 
 	if(trans = document.getElementById("table-transactions"))
