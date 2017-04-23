@@ -15,11 +15,33 @@
 			<tr>
 				<th>ID</th>
 				<th>Description</th>
+				<th>Details</th>
 			</tr>
 		</thead>
 		<tbody id="table-categories">
 			
 		</tbody>
 	</table>
+
+    <div class="modal fade" id="viewCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+            <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100" id="myModalLabel">Transaction Details</h4>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body text-center" id="details"></div>
+              
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
 
 {% endblock %}
