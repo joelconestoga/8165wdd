@@ -10,6 +10,8 @@ window.onload = function() {
 }
 
 function usersHandler(users) {
+	if(title = document.getElementById("content-title"))
+		title.innerHTML = "All Users";
 	users.forEach(appendUsersRow);
 }
 

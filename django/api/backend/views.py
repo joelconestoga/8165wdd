@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.models import User
-from .models import Transaction, UserSession
+from .models import Transaction, UserSession, Category
 from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
@@ -205,6 +205,52 @@ def users(request):
         except Exception as e:
             log("Exception CREATING USER", str(e))
             return HttpResponseForbidden()
+
+
+def categories(request):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    categories = Category.objects.all()
+
+    elements = []
+
+    for category in categories:
+        elements.append({
+            'id': category.id,
+            'name': category.name,
+        })
+
+    return createResponse(elements)
+
+
+@csrf_exempt
+def add_transaction(request, id):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    try:
+        
+        name = request.POST['name']
+        value = request.POST['value']
+        category_id = request.POST['category']
+        
+        log("VAI SALVAR", str(name))
+
+        transaction = Transaction.objects.create(
+            name=name,
+            value=value,
+            category_id=category_id,
+            user_id=id,
+        )
+        
+        transaction.save()
+
+        return createResponse([])
+
+    except Exception as e:
+        log("Exception in add_transaction", str(e))
+        return HttpResponseForbidden()
 
 
 def default(obj):

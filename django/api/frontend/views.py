@@ -21,3 +21,11 @@ def users(request):
 def transactions(request):
 	return render(request, 'frontend/transactions.html')
 
+
+def add_transaction(request):
+	return render(request, 'frontend/add-transaction.html')
+
+
+def categories(request):
+	return render(request, 'frontend/categories.html')
+

@@ -4,8 +4,6 @@ function loadUserDetails(id) {
 }
 
 function userDetailHandler(users) {
-	if(title = document.getElementById("content-title"))
-		title.innerHTML = "All Users";
 	users.forEach(printSpecificUser);
 }
 

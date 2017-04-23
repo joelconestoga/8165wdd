@@ -3,6 +3,10 @@ function allUsers() {
 	redirect("/frontend/users/");
 }
 
+function allCategories() {
+	redirect("/frontend/categories/");
+}
+
 function logOut() {
 	redirect("/frontend/login/");
 	createRequest("POST", "/backend/users/"+LocalToken.userId()+"/log_out/", null, logoutHandler, null);

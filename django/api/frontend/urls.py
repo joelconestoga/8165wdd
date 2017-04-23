@@ -9,4 +9,6 @@ urlpatterns = [
 	url(r'^register/$', views.register, name='register'),
 	url(r'^users/$', views.users, name='users'),
 	url(r'^transactions/$', views.transactions, name='transactions'),
+	url(r'^categories/$', views.categories, name='categories'),
+	url(r'^add-transaction/$', views.add_transaction, name='add_transaction'),
 ]
