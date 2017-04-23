@@ -112,18 +112,31 @@ def is_staff(id):
 
 
 @csrf_exempt
-def log_out(request, id):
-    session = UserSession.objects.get(user_id=id)
+def log_out(request, user_id):
+    session = UserSession.objects.get(user_id=user_id)
     session.delete()
     return createResponse([])
 
 
-def user_transactions(request, id):
+def user_transactions(request, user_id):
     if not is_authenticated(request):
         return HttpResponseForbidden()
 
-    transactions = Transaction.objects.filter(user_id=id)
+    transactions = Transaction.objects.filter(user_id=user_id)
 
+    return transactions_response(transactions)
+
+
+def user_category_transactions(request, user_id, category_id):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    transactions = Transaction.objects.filter(user_id=user_id, category_id=category_id)
+
+    return transactions_response(transactions)
+
+
+def transactions_response(transactions):
     elements = []
 
     for trans in transactions:
@@ -136,10 +149,10 @@ def user_transactions(request, id):
     return createResponse(elements)
 
 
-def user_detail(request, id):
+def user_detail(request, user_id):
     if request.method == 'GET':
 
-        users = User.objects.filter(id=id)
+        users = User.objects.filter(id=user_id)
 
         elements = []
 
@@ -155,10 +168,10 @@ def user_detail(request, id):
         return createResponse(elements)
 
 
-def category_detail(request, id):
+def category_detail(request, category_id):
     if request.method == 'GET':
 
-        categories = Category.objects.filter(id=id)
+        categories = Category.objects.filter(id=category_id)
 
         elements = []
 
@@ -241,7 +254,7 @@ def categories(request):
 
 
 @csrf_exempt
-def add_transaction(request, id):
+def add_transaction(request, user_id):
     if not is_authenticated(request):
         return HttpResponseForbidden()
 
@@ -257,7 +270,7 @@ def add_transaction(request, id):
             name=name,
             value=value,
             category_id=category_id,
-            user_id=id,
+            user_id=user_id,
         )
         
         transaction.save()

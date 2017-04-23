@@ -1,7 +1,7 @@
 window.onload = function() {
 	console.log(" --------- Add-transaction loading");
 	bindTransactionSubmitListener();
-	loadCategories();
+	requestCategories(addTransactionCategoriesHandler, addTransactionCategoriesErrorHandler);
 }
 
 function bindTransactionSubmitListener() {
@@ -28,10 +28,6 @@ function addTransactionHandler() {
 
 function addTransactionErrorHandler() {
 	redirect("/frontend/add-transaction/");
-}
-
-function loadCategories() {
-	createRequest("GET", "/backend/categories/", null, addTransactionCategoriesHandler, addTransactionCategoriesErrorHandler);
 }
 
 function addTransactionCategoriesHandler(categories) {

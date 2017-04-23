@@ -1,12 +1,6 @@
 {% extends 'frontend/base-menu.html' %}
 
-	{% load staticfiles %}
-
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/users.js' %}"></script>
-	{% endblock %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -24,4 +18,8 @@
 		</tbody>
 	</table>
 
+{% endblock %}
+
+{% block subscript %}
+	<script type="text/javascript" src="{% static 'script/loaders/users.js' %}"></script>
 {% endblock %}

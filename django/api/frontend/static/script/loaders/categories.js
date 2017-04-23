@@ -9,14 +9,9 @@ window.onload = function() {
 	}
 }
 
-allCategories = {};
-
 function categoriesHandler(categories) {
 	if(title = document.getElementById("content-title"))
 		title.innerHTML = "All Categories";
-	
-	allCategories.all = categories;
-
 	categories.forEach(appendCategoriesRow);
 	addDetailButtonListeners();
 }
@@ -64,4 +59,5 @@ function categoryDetailHandler(categories) {
 		}	
 	})
 }
+
 

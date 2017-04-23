@@ -1,20 +1,19 @@
 {% extends 'frontend/base-menu.html' %}
 
-	{% load staticfiles %}
-
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/transactions.js' %}"></script>
-	{% endblock %}
+{% load staticfiles %}
 
 {% block content %}
 
     <a href="/frontend/add-transaction/">
-        <button type="button" class="btn btn-success">
+        <button type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Transaction
         </button>
     </a>
+
+	<div>
+		<select name="filter" id="filter-transaction">
+		</select>
+	</div>
 
 	<table class="rwd-table">
 		<thead>
@@ -29,4 +28,9 @@
 		</tbody>
 	</table>
 
+{% endblock %}
+
+{% block subscript %}
+	<script type="text/javascript" src="{% static 'script/loaders/transactions.js' %}"></script>
+	<script type="text/javascript" src="{% static 'script/common/categories.js' %}"></script>
 {% endblock %}

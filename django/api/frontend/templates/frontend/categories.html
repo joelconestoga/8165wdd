@@ -1,12 +1,6 @@
 {% extends 'frontend/base-menu.html' %}
 
-	{% load staticfiles %}
-
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/categories.js' %}"></script>
-	{% endblock %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -44,4 +38,9 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block subscript %}
+    <script type="text/javascript" src="{% static 'script/loaders/categories.js' %}"></script>
+	<script type="text/javascript" src="{% static 'script/common/categories.js' %}"></script>
 {% endblock %}

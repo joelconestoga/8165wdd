@@ -2,10 +2,6 @@
 
 	{% load staticfiles %}
 
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/login.js' %}"></script>
-	{% endblock %}
-
 {% block body %}
 	<h3><small>Login Here</small></h3>
 	
@@ -29,4 +25,9 @@
     <div>
         <p>Don't have an account? <a href="/frontend/register/">Click here</a> to Register.</p>
     </div>
+
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/loaders/login.js' %}"></script>
+	{% endblock %}
+
 {% endblock %}
