@@ -2,9 +2,8 @@
 
 	{% load staticfiles %}
 
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/index.js' %}"></script>
-	{% endblock %}
-
 {% block body %}
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/common/index.js' %}"></script>
+	{% endblock %}
 {% endblock %}

@@ -1,5 +1,3 @@
-//Next step is to use the token to identify the user on certain pages and you're good to go.
-
 window.onload = function() {
 	console.log(" --------- Index loading");
 	validateSession();

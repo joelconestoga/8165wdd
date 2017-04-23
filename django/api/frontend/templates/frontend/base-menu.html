@@ -1,5 +1,7 @@
 {% extends 'frontend/base.html' %}
 
+{% load staticfiles %}
+
 {% block body %}
 	<nav id="nav_menu">
 		<ul>
@@ -21,6 +23,15 @@
 	<h1 id="content-title"></h1>
 
 	{% block content %}
+	{% endblock %}
+	
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/common/base-menu.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/common/user-detail.js' %}"></script>
+		
+		{% block subscript %}
+		{% endblock %}
+		
 	{% endblock %}
 
 {% endblock %}

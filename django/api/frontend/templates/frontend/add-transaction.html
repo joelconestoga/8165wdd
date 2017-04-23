@@ -2,10 +2,6 @@
 
 	{% load staticfiles %}
 
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/add-transaction.js' %}"></script>
-	{% endblock %}
-
 {% block body %}
 	<h3><small>New Transaction</small></h3>
 	
@@ -31,4 +27,8 @@
 		</div>
 	</form>
 
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/loaders/add-transaction.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/common/categories.js' %}"></script>
+	{% endblock %}
 {% endblock %}

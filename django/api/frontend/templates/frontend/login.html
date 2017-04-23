@@ -2,12 +2,8 @@
 
 	{% load staticfiles %}
 
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/login.js' %}"></script>
-	{% endblock %}
-
 {% block body %}
-	<h3><small>Log in here</small></h3>
+	<h3><small>Login Here</small></h3>
 	
 	<form method="post" id="login-form">
 		 {% csrf_token %}
@@ -22,11 +18,16 @@
 		</div>
 
 		<div class="form-group">
-			<button type="submit" >Log in</button>
+			<button class="btn" type="submit" >LOGIN</button>
 		</div>
 	</form>
 
     <div>
-        Don't have an account? <a href="/frontend/register/">Click here</a> to Register.
+        <p>Don't have an account? <a href="/frontend/register/">Click here</a> to Register.</p>
     </div>
+
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/loaders/login.js' %}"></script>
+	{% endblock %}
+
 {% endblock %}

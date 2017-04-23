@@ -15,6 +15,28 @@ footer {
   margin-right: 10px;
 }
 
+a:link, a:visited {
+    color: #dd5638;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #c9302c;
+}
+
+.btn {
+    font-weight: bold;
+    margin: 10px 10px 10px 10px;
+}
+
+p {
+    margin: 0 0 15px;
+}
+
+.form-group {
+  margin-top: 10px;
+}
+
 #nav_menu {
   margin-top: 20px;
   margin-bottom: 0px;
@@ -51,9 +73,6 @@ footer {
   background-color: gray;
   color: #dd5;
 }
-
-
-
 
 .rwd-table {
   margin-top: 0px;
@@ -113,6 +132,8 @@ body {
   text-rendering: optimizeLegibility;
   color: #444;
   background: #eee;
+  font-size: 16px;
+  text-align: center;
 }
 
 h1 {
@@ -121,11 +142,20 @@ h1 {
   color: #34495E;
 }
 
+h3{
+    margin: 100px 0px 50px 0px;
+    font-size: 50px;
+    text-align: center;
+    color: #34495E;
+}
+
 .rwd-table {
   background: #34495E;
   color: #fff;
   border-radius: .4em;
   overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
 }
 .rwd-table tr {
   border-color: #46637f;
@@ -140,5 +170,77 @@ h1 {
 }
 .rwd-table th, .rwd-table td:before {
   color: #dd5;
+}
+
+
+
+
+/* ==== FORMS ==== */
+
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+    color: #666;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 40%;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 16px;
+}
+
+input[type="submit"],
+button[type="submit"] {
+    color: white;
+    margin-bottom: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.33;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: none;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    width: 40%;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    outline: none;
+    border: none;
+    background: #79b044;
+}
+
+select {
+    color: #666;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 40%;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 16px;
 }
 

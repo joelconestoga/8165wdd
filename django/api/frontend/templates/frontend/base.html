@@ -3,11 +3,6 @@
 <head>
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-	<script type="text/javascript" src="{% static 'script/request.js' %}"></script>
-	
-	{% block head %}
-	{% endblock %}
-	
 	<title>Front End</title>
 </head>
 <body>
@@ -16,5 +11,9 @@
 	{% endblock %}
 
 	<footer id="footer"></footer>
+
+	<script type="text/javascript" src="{% static 'script/common/request.js' %}"></script>
+	{% block script %}
+	{% endblock %}
 </body>
 </html>

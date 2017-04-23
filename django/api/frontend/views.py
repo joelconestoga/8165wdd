@@ -29,5 +29,7 @@ def add_transaction(request):
 def categories(request):
 	return render(request, 'frontend/categories.html')
 
-def category_detail(request):
-	return render(request, 'frontend/category_detail.html')
+
+def add_category(request):
+	return render(request, 'frontend/add-category.html')
+

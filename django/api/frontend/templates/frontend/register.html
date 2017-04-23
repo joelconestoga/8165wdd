@@ -2,10 +2,6 @@
 
 	{% load staticfiles %}
 
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/register.js' %}"></script>
-	{% endblock %}
-
 {% block body %}
 	<h3><small>Register</small></h3>
 	
@@ -50,5 +46,9 @@
     <div>
         Already have an account? <a href="/frontend/login/">Click here</a> to Log In.
     </div>
+
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/loaders/register.js' %}"></script>
+	{% endblock %}
 
 {% endblock %}

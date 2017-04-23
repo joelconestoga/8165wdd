@@ -13,7 +13,7 @@ from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 
-CONST_SECONDS_TO_EXPIRE = 600
+CONST_SECONDS_TO_EXPIRE = 500
 
 # Create your views here.
 def index(request):
@@ -112,34 +112,47 @@ def is_staff(id):
 
 
 @csrf_exempt
-def log_out(request, id):
-    session = UserSession.objects.get(user_id=id)
+def log_out(request, user_id):
+    session = UserSession.objects.get(user_id=user_id)
     session.delete()
     return createResponse([])
 
 
-def user_transactions(request, id):
+def user_transactions(request, user_id):
     if not is_authenticated(request):
         return HttpResponseForbidden()
 
-    transactions = Transaction.objects.filter(user_id=id)
+    transactions = Transaction.objects.filter(user_id=user_id)
 
+    return transactions_response(transactions)
+
+
+def user_category_transactions(request, user_id, category_id):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    transactions = Transaction.objects.filter(user_id=user_id, category_id=category_id)
+
+    return transactions_response(transactions)
+
+
+def transactions_response(transactions):
     elements = []
-
     for trans in transactions:
         elements.append({
             'id': trans.id,
             'name': trans.name,
-            'value': trans.value
+            'value': trans.value,
+            'category': trans.category.name,
         })
 
     return createResponse(elements)
 
 
-def user_detail(request, id):
+def user_detail(request, user_id):
     if request.method == 'GET':
 
-        users = User.objects.filter(id=id)
+        users = User.objects.filter(id=user_id)
 
         elements = []
 
@@ -150,6 +163,22 @@ def user_detail(request, id):
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'email': user.email,
+            })
+
+        return createResponse(elements)
+
+
+def category_detail(request, category_id):
+    if request.method == 'GET':
+
+        categories = Category.objects.filter(id=category_id)
+
+        elements = []
+
+        for category in categories:
+            elements.append({
+                'id': category.id,
+                'name': category.name,
             })
 
         return createResponse(elements)
@@ -225,7 +254,7 @@ def categories(request):
 
 
 @csrf_exempt
-def add_transaction(request, id):
+def add_transaction(request, user_id):
     if not is_authenticated(request):
         return HttpResponseForbidden()
 
@@ -235,13 +264,11 @@ def add_transaction(request, id):
         value = request.POST['value']
         category_id = request.POST['category']
         
-        log("VAI SALVAR", str(name))
-
         transaction = Transaction.objects.create(
             name=name,
             value=value,
             category_id=category_id,
-            user_id=id,
+            user_id=user_id,
         )
         
         transaction.save()
@@ -250,6 +277,25 @@ def add_transaction(request, id):
 
     except Exception as e:
         log("Exception in add_transaction", str(e))
+        return HttpResponseForbidden()
+
+
+@csrf_exempt
+def add_category(request):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    try:
+        
+        name = request.POST['name']
+
+        category = Category.objects.create(name=name)
+        category.save()
+        
+        return createResponse([])
+
+    except Exception as e:
+        log("Exception in add_category", str(e))
         return HttpResponseForbidden()
 
 

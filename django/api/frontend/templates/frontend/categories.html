@@ -1,19 +1,21 @@
 {% extends 'frontend/base-menu.html' %}
 
-	{% load staticfiles %}
-
-	{% block head %}
-		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
-		<script type="text/javascript" src="{% static 'script/categories.js' %}"></script>
-	{% endblock %}
+{% load staticfiles %}
 
 {% block content %}
+
+    <a href="/frontend/add-category/">
+        <button type="button" class="btn">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Category
+        </button>
+    </a>
 
 	<table class="rwd-table">
 		<thead>
 			<tr>
+				<th>ID</th>
 				<th>Description</th>
+				<th>Details</th>
 			</tr>
 		</thead>
 		<tbody id="table-categories">
@@ -21,4 +23,30 @@
 		</tbody>
 	</table>
 
+    <div class="modal fade" id="viewCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+            <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100" id="myModalLabel">Category Details</h4>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body text-center" id="details"></div>
+              
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block subscript %}
+    <script type="text/javascript" src="{% static 'script/loaders/categories.js' %}"></script>
+	<script type="text/javascript" src="{% static 'script/common/categories.js' %}"></script>
 {% endblock %}
