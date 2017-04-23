@@ -1,0 +1,54 @@
+{% extends 'frontend/base.html' %}
+
+	{% load staticfiles %}
+
+	{% block head %}
+		<script type="text/javascript" src="{% static 'script/register.js' %}"></script>
+	{% endblock %}
+
+{% block body %}
+	<h3><small>Register</small></h3>
+	
+	<form method="post" id="register-form">
+		 {% csrf_token %}
+		<div class="form-group">
+   			<input type="text" name="username" id="register-username" placeholder="Username" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+   			<input type="text" name="first_name" id="register-first-name" placeholder="First name" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+   			<input type="text" name="last_name" id="register-last-name" placeholder="Last name" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+   			<input type="email" name="email" id="register-email" placeholder="Email" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+			<input type="password" name="password" id="register-password" placeholder="Password">
+			<span class="form-validation-message" id="passwordError"></span>
+		</div>
+
+		<div class="form-group">
+			<select form="register-form" name="staff" id="register-staff">
+			  <option value="False">User</option>
+			  <option value="True">Staff</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" >Save</button>
+		</div>
+	</form>
+    <div>
+        Already have an account? <a href="/frontend/login/">Click here</a> to Log In.
+    </div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'frontend/base.html' %}
+
+	{% load staticfiles %}
+
+	{% block head %}
+		<script type="text/javascript" src="{% static 'script/add-transaction.js' %}"></script>
+	{% endblock %}
+
+{% block body %}
+	<h3><small>New Transaction</small></h3>
+	
+	<form method="post" id="transaction-form">
+		 {% csrf_token %}
+		<div class="form-group">
+   			<input type="text" name="name" id="transaction-name" placeholder="Description" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+   			<input type="text" name="value" id="transaction-value" placeholder="Value" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+			<select form="transaction-form" name="category" id="transaction-category">
+			</select>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" >Save</button>
+		</div>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'frontend/base-menu.html' %}
+
+	{% load staticfiles %}
+
+	{% block head %}
+		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/users.js' %}"></script>
+	{% endblock %}
+
+{% block content %}
+
+	<table class="rwd-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Staff</th>
+			</tr>
+		</thead>
+		<tbody id="table-users">
+			
+		</tbody>
+	</table>
+
+{% endblock %}

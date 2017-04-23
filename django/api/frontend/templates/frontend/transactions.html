@@ -1,0 +1,32 @@
+{% extends 'frontend/base-menu.html' %}
+
+	{% load staticfiles %}
+
+	{% block head %}
+		<script type="text/javascript" src="{% static 'script/base-menu.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/user-detail.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/transactions.js' %}"></script>
+	{% endblock %}
+
+{% block content %}
+
+    <a href="/frontend/add-transaction/">
+        <button type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Transaction
+        </button>
+    </a>
+
+	<table class="rwd-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Description</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody id="table-transactions">
+			
+		</tbody>
+	</table>
+
+{% endblock %}
