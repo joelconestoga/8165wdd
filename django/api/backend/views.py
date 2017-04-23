@@ -155,6 +155,22 @@ def user_detail(request, id):
         return createResponse(elements)
 
 
+def category_detail(request, id):
+    if request.method == 'GET':
+
+        categories = Category.objects.filter(id=id)
+
+        elements = []
+
+        for category in categories:
+            elements.append({
+                'id': category.id,
+                'name': category.name,
+            })
+
+        return createResponse(elements)
+
+
 @csrf_exempt
 def users(request):
 

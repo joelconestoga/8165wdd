@@ -26,7 +26,7 @@ function appendCategoriesRow(category, index) {
     var row = "<tr>" +
 		      "<td>" + category.id + "</td>" +
 		      "<td>" + category.name + "</td>" +
-			  "<td><button class='btn btn-sm btn-default waves-effect view-detail-button' data-id='" + index + 
+			  "<td><button class='btn btn-sm btn-default waves-effect view-detail-button' data-id='" + category.id + 
 			  "' data-toggle='modal' data-target='#viewCategory'>View</button>" +
           	  "</td>"+
 		      "</tr>";
@@ -35,29 +35,33 @@ function appendCategoriesRow(category, index) {
 		categories.innerHTML += row;
 }
 
+function categoriesErrorHandler() {
+	redirect("/frontend/transactions/");
+}
+
 function addDetailButtonListeners() {
 	if (detailButtons = document.getElementsByClassName("view-detail-button"))
 		Array.from(detailButtons).forEach(addDetailListener);	
 }
 
-
 function addDetailListener(button) {
 
 	var showTransactionDetails = function() {
-		var categories = allCategories.all;
-    	var index = this.getAttribute("data-id");
+    	var id = this.getAttribute("data-id");
     	
-		if(details = document.getElementById("details")) {
-   			details.innerHTML = "<p>Date: " + categories[index].id + "</p>" + 
-   								"<p>Location: " + categories[index].name + "</p>";
-		}	
+    	createRequest("GET", "/backend/categories/" + id, null, categoryDetailHandler, categoriesErrorHandler);
+
 	};
 
 	button.addEventListener('click', showTransactionDetails, false);
 }
 
-
-function categoriesErrorHandler() {
-	redirect("/frontend/transactions/");
+function categoryDetailHandler(categories) {
+	categories.forEach(function(category) {
+		if(details = document.getElementById("details")) {
+				details.innerHTML = "<p>Id: " + category.id + "</p>" + 
+									"<p>Description: " + category.name + "</p>";
+		}	
+	})
 }
 
