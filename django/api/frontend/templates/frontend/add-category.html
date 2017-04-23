@@ -1,0 +1,23 @@
+{% extends 'frontend/base.html' %}
+
+	{% load staticfiles %}
+
+{% block body %}
+	<h3><small>New Category</small></h3>
+	
+	<form method="post" id="category-form">
+		 {% csrf_token %}
+		<div class="form-group">
+   			<input type="text" name="name" id="category-name" placeholder="Description" autofocus>
+			<span class="form-validation-message" id="usernameError"></span>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" >Save</button>
+		</div>
+	</form>
+
+	{% block script %}
+		<script type="text/javascript" src="{% static 'script/loaders/add-category.js' %}"></script>
+	{% endblock %}
+{% endblock %}

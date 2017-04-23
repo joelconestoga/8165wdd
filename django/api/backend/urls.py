@@ -14,4 +14,5 @@ urlpatterns = [
 	url(r'^users/(?P<user_id>[0-9]+)/log_out/$', views.log_out, name='log_out'),
 	url(r'^categories/$', views.categories, name='categories'),
 	url(r'^categories/(?P<category_id>[0-9]+)/$', views.category_detail, name='category_detail'),
+	url(r'^add_category/$', views.add_category, name='add_category'),
 ]

@@ -264,8 +264,6 @@ def add_transaction(request, user_id):
         value = request.POST['value']
         category_id = request.POST['category']
         
-        log("VAI SALVAR", str(name))
-
         transaction = Transaction.objects.create(
             name=name,
             value=value,
@@ -279,6 +277,25 @@ def add_transaction(request, user_id):
 
     except Exception as e:
         log("Exception in add_transaction", str(e))
+        return HttpResponseForbidden()
+
+
+@csrf_exempt
+def add_category(request):
+    if not is_authenticated(request):
+        return HttpResponseForbidden()
+
+    try:
+        
+        name = request.POST['name']
+
+        category = Category.objects.create(name=name)
+        category.save()
+        
+        return createResponse([])
+
+    except Exception as e:
+        log("Exception in add_category", str(e))
         return HttpResponseForbidden()
 
 
