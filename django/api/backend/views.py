@@ -13,7 +13,7 @@ from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 
-CONST_SECONDS_TO_EXPIRE = 15
+CONST_SECONDS_TO_EXPIRE = 600
 
 # Create your views here.
 def index(request):

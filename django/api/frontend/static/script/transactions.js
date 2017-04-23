@@ -3,7 +3,7 @@ window.onload = function() {
 
 	if (token = window.localStorage.getItem('token')) {
 		loadUserDetails(window.localStorage.getItem('token')[0]);
-		createRequest("GET", "/backend/users/"+window.localStorage.getItem('token')[0]+"/transactions", null, transactionsHandler, transactionErrorHandler);
+		createRequest("GET", "/backend/users/" + window.localStorage.getItem('token')[0] + "/transactions", null, transactionsHandler, transactionErrorHandler);	
 	} else {
 		transactionErrorHandler()		
 	}
