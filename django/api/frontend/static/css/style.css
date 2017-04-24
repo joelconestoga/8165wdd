@@ -27,6 +27,35 @@ a:hover {
 .btn {
     font-weight: bold;
     margin: 10px 10px 10px 10px;
+    border: 3px solid #fff;
+    color: #fff;
+}
+
+.btn {
+    border: 2px solid black;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    color: #34495E;
+    background: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    display: inline-block;
+    margin: 5px 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    }
+
+
+.btn:hover {
+  background-color: green;
+  color: white;
 }
 
 p {
@@ -35,6 +64,11 @@ p {
 
 .form-group {
   margin-top: 10px;
+}
+
+.form-validation-message {
+  color: red;
+  font-size: 14px;
 }
 
 #nav_menu {

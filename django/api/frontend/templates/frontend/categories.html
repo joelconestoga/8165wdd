@@ -10,6 +10,12 @@
         </button>
     </a>
 
+     <div class="text-center">
+        <h4 id="myLabel">Category Details</h4>
+    </div>
+
+    <div class="text-center" id="details"></div>
+                
 	<table class="rwd-table">
 		<thead>
 			<tr>
@@ -23,29 +29,8 @@
 		</tbody>
 	</table>
 
-    <div class="modal fade" id="viewCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <!--Content-->
-            <div class="modal-content">
-            <!--Header-->
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100" id="myModalLabel">Category Details</h4>
-                </div>
-
-                <!--Body-->
-                <div class="modal-body text-center" id="details"></div>
-              
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!--/.Content-->
-        </div>
-    </div>
-
 {% endblock %}
-
+              
 {% block subscript %}
     <script type="text/javascript" src="{% static 'script/loaders/categories.js' %}"></script>
 	<script type="text/javascript" src="{% static 'script/common/categories.js' %}"></script>

@@ -5,31 +5,36 @@
 {% block body %}
 	<h3><small>Register</small></h3>
 	
-	<form method="post" id="register-form">
+	<form method="post" id="register-form" novalidate="novalidate">
 		 {% csrf_token %}
 		<div class="form-group">
    			<input type="text" name="username" id="register-username" placeholder="Username" autofocus>
-			<span class="form-validation-message" id="usernameError"></span>
+			<br><span class="form-validation-message" id="usernameError"></span>
 		</div>
 
 		<div class="form-group">
    			<input type="text" name="first_name" id="register-first-name" placeholder="First name" autofocus>
-			<span class="form-validation-message" id="usernameError"></span>
+			<br><span class="form-validation-message" id="firstNameError"></span>
 		</div>
 
 		<div class="form-group">
    			<input type="text" name="last_name" id="register-last-name" placeholder="Last name" autofocus>
-			<span class="form-validation-message" id="usernameError"></span>
+			<br><span class="form-validation-message" id="lastNameError"></span>
 		</div>
 
 		<div class="form-group">
    			<input type="email" name="email" id="register-email" placeholder="Email" autofocus>
-			<span class="form-validation-message" id="usernameError"></span>
+			<br><span class="form-validation-message" id="emailError"></span>
 		</div>
 
 		<div class="form-group">
 			<input type="password" name="password" id="register-password" placeholder="Password">
-			<span class="form-validation-message" id="passwordError"></span>
+			<br><span class="form-validation-message" id="passwordError"></span>
+		</div>
+
+		<div class="form-group">
+			<input type="password" name="confirm-password" id="register-confirm-password" placeholder="Confirm Password">
+			<br><span class="form-validation-message" id="confirmPasswordError"></span>
 		</div>
 
 		<div class="form-group">
@@ -40,7 +45,7 @@
 		</div>
 
 		<div class="form-group">
-			<button type="submit" >Save</button>
+			<button class='btn'>Register</button>
 		</div>
 	</form>
     <div>
@@ -49,6 +54,7 @@
 
 	{% block script %}
 		<script type="text/javascript" src="{% static 'script/loaders/register.js' %}"></script>
+		<script type="text/javascript" src="{% static 'script/common/validation.js' %}"></script>
 	{% endblock %}
 
 {% endblock %}
