@@ -4,15 +4,16 @@
 
 {% block content %}
 
-    <a href="/frontend/add-transaction/">
-        <button type="button" class="btn">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Transaction
-        </button>
-    </a>
-
 	<div>
 		<select name="filter" id="filter-transaction">
 		</select>
+
+		<a href="/frontend/add-transaction/" class="add-transaction-link">
+		<button type="button" class="btn">
+		Add Transaction
+		</button>
+    </a>
+
 	</div>
 
 	<table class="rwd-table">
