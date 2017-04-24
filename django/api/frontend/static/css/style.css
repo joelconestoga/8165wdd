@@ -230,8 +230,7 @@ textarea {
     font-size: 16px;
 }
 
-input[type="submit"],
-button[type="submit"] {
+input[type="submit"] {
     color: white;
     margin-bottom: 50px;
     font-size: 18px;
@@ -253,8 +252,7 @@ button[type="submit"] {
     width: 40%;
 }
 
-input[type="submit"]:hover,
-button[type="submit"]:hover {
+input[type="submit"]:hover {
     outline: none;
     border: none;
     background: #79b044;
